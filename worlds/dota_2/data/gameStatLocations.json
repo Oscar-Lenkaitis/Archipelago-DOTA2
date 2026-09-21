@@ -1,0 +1,109 @@
+{
+  "game_stat_locations" :[
+    {
+      "id": 1,
+      "name": "Win as a Intelligence Hero"
+    
+    },
+    {
+      "id": 2,
+      "name": "Win as a Strength Hero"
+    },
+    {
+      "id": 3,
+      "name": "Win as a Agility Hero"
+    },
+    {
+      "id": 4,
+      "name": "Get 1 Kill(s)"
+    },
+    {
+      "id": 5,
+      "name": "Get 5 Kill(s)"
+    },
+    {
+      "id": 6,
+      "name": "Get 10 Kill(s)"
+    },
+    {
+      "id": 7,
+      "name": "Get 5 Assists"
+    },
+    {
+      "id": 8,
+      "name": "Get 10 Assists"
+    },
+    {
+      "id": 10,
+      "name": "Get 20 Assists"
+    },
+    {
+      "id": 11,
+      "name": "Get 1 Deward(s)"
+    },
+    {
+      "id": 12,
+      "name": "Get 5 Deward(s)"
+    },
+    {
+      "id": 13,
+      "name": "Get 10 Deward(s)"
+    },
+    {
+      "id": 14,
+      "name": "Win as a 0 Legged Hero"
+    },
+    {
+      "id": 15,
+      "name": "Win as a 2 Legged Hero"
+    },
+    {
+      "id": 16,
+      "name": "Win as a 4+ Legged Hero"
+    },
+    {
+      "id": 17,
+      "name": "Win as a Carry Hero"
+    },
+    {
+      "id": 18,
+      "name": "Win as a Support Hero"
+    },
+    {
+      "id": 19,
+      "name": "Get 75 Last Hits"
+    },
+    {
+      "id": 20,
+      "name": "Get 125 Last Hits"
+    },
+    {
+      "id": 21,
+      "name": "Get 175 Last Hits"
+    },
+    {
+      "id": 22,
+      "name": "Get 8 Denies"
+    },
+    {
+      "id": 23,
+      "name": "Get 16 Denies"
+    },
+    {
+      "id": 24,
+      "name": "Get 32 Denies"
+    },
+    {
+      "id": 25,
+      "name": "Win as a Universal Hero"
+    },
+        {
+      "id": 26,
+      "name": "Win as a Melee Hero"
+    },
+    {
+      "id": 27,
+      "name": "Win as a Ranged Hero"
+    }
+    ]
+}

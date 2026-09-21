@@ -1,0 +1,77 @@
+{
+  "purchase_locations" :[
+    {
+      "id": 1,
+      "name": "Iron Branch"
+    
+    },
+    {
+      "id": 2,
+      "name": "Tango"
+    },
+    {
+      "id": 3,
+      "name": "Sentry Ward"
+    },
+    {
+      "id": 4,
+      "name": "Observer Ward"
+    },
+    {
+      "id": 5,
+      "name": "Mango"
+    },
+    {
+      "id": 6,
+      "name": "Boots of Speed"
+    },
+    {
+      "id": 7,
+      "name": "Quelling Blade"
+    },
+    {
+      "id": 8,
+      "name": "Bottle"
+    },
+    {
+      "id": 9,
+      "name": "Blood Grenade"
+    },
+    {
+      "id": 10,
+      "name": "Smoke of Deciet"
+    },
+    {
+      "id": 11,
+      "name": "Healing Salve"
+    },
+    {
+      "id": 12,
+      "name": "Circlet"
+    },
+    {
+      "id": 13,
+      "name": "Gauntlet of Strength"
+    },
+    {
+      "id": 14,
+      "name": "Wraith Band"
+    },
+    {
+      "id": 15,
+      "name": "Null Tailisman"
+    },
+    {
+      "id": 16,
+      "name": "Power Treads"
+    },
+    {
+      "id": 17,
+      "name": "Arcane Boots"
+    },
+    {
+      "id": 18,
+      "name": "Magic Stick"
+    }
+    ]
+}

@@ -1,0 +1,893 @@
+{
+    "unlock_hero_items": [
+        {
+            "id": 1,
+            "name": "Unlock Anti-Mage",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 2,
+            "name": "Unlock Axe",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 3,
+            "name": "Unlock Bane",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 4,
+            "name": "Unlock Bloodseeker",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 5,
+            "name": "Unlock Crystal Maiden",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 6,
+            "name": "Unlock Drow Ranger",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 7,
+            "name": "Unlock Earthshaker",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 8,
+            "name": "Unlock Juggernaut",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 9,
+            "name": "Unlock Mirana",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 10,
+            "name": "Unlock Morphling",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 11,
+            "name": "Unlock Shadow Fiend",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 12,
+            "name": "Unlock Phantom Lancer",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 13,
+            "name": "Unlock Puck",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 14,
+            "name": "Unlock Pudge",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 15,
+            "name": "Unlock Razor",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 16,
+            "name": "Unlock Sand King",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 17,
+            "name": "Unlock Storm Spirit",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 18,
+            "name": "Unlock Sven",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 19,
+            "name": "Unlock Tiny",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 20,
+            "name": "Unlock Vengeful Spirit",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 21,
+            "name": "Unlock Windranger",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 22,
+            "name": "Unlock Zeus",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 23,
+            "name": "Unlock Kunkka",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 25,
+            "name": "Unlock Lina",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 26,
+            "name": "Unlock Lion",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 27,
+            "name": "Unlock Shadow Shaman",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 28,
+            "name": "Unlock Slardar",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 29,
+            "name": "Unlock Tidehunter",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 30,
+            "name": "Unlock Witch Doctor",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 31,
+            "name": "Unlock Lich",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 32,
+            "name": "Unlock Riki",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 33,
+            "name": "Unlock Enigma",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 34,
+            "name": "Unlock Tinker",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 35,
+            "name": "Unlock Sniper",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 36,
+            "name": "Unlock Necrophos",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 37,
+            "name": "Unlock Warlock",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 38,
+            "name": "Unlock Beastmaster",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 39,
+            "name": "Unlock Queen of Pain",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 40,
+            "name": "Unlock Venomancer",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 41,
+            "name": "Unlock Faceless Void",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 42,
+            "name": "Unlock Wraith King",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 43,
+            "name": "Unlock Death Prophet",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 44,
+            "name": "Unlock Phantom Assassin",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 45,
+            "name": "Unlock Pugna",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 46,
+            "name": "Unlock Templar Assassin",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 47,
+            "name": "Unlock Viper",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 48,
+            "name": "Unlock Luna",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 49,
+            "name": "Unlock Dragon Knight",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 50,
+            "name": "Unlock Dazzle",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 51,
+            "name": "Unlock Clockwerk",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 52,
+            "name": "Unlock Leshrac",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 53,
+            "name": "Unlock Nature's Prophet",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 54,
+            "name": "Unlock Lifestealer",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 55,
+            "name": "Unlock Dark Seer",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 56,
+            "name": "Unlock Clinkz",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 57,
+            "name": "Unlock Omniknight",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 58,
+            "name": "Unlock Enchantress",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 59,
+            "name": "Unlock Huskar",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 60,
+            "name": "Unlock Night Stalker",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 61,
+            "name": "Unlock Broodmother",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 62,
+            "name": "Unlock Bounty Hunter",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 63,
+            "name": "Unlock Weaver",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 64,
+            "name": "Unlock Jakiro",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 65,
+            "name": "Unlock Batrider",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 66,
+            "name": "Unlock Chen",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 67,
+            "name": "Unlock Spectre",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 68,
+            "name": "Unlock Ancient Apparition",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 69,
+            "name": "Unlock Doom",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 70,
+            "name": "Unlock Ursa",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 71,
+            "name": "Unlock Spirit Breaker",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 72,
+            "name": "Unlock Gyrocopter",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 73,
+            "name": "Unlock Alchemist",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 74,
+            "name": "Unlock Invoker",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 75,
+            "name": "Unlock Silencer",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 76,
+            "name": "Unlock Outworld Destroyer",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 77,
+            "name": "Unlock Lycan",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 78,
+            "name": "Unlock Brewmaster",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 79,
+            "name": "Unlock Shadow Demon",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 80,
+            "name": "Unlock Lone Druid",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 81,
+            "name": "Unlock Chaos Knight",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 82,
+            "name": "Unlock Meepo",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 83,
+            "name": "Unlock Treant Protector",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 84,
+            "name": "Unlock Ogre Magi",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 85,
+            "name": "Unlock Undying",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 86,
+            "name": "Unlock Rubick",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 87,
+            "name": "Unlock Disruptor",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 88,
+            "name": "Unlock Nyx Assassin",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 89,
+            "name": "Unlock Naga Siren",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 90,
+            "name": "Unlock Keeper of the Light",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 91,
+            "name": "Unlock Io",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 92,
+            "name": "Unlock Visage",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 93,
+            "name": "Unlock Slark",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 94,
+            "name": "Unlock Medusa",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 95,
+            "name": "Unlock Troll Warlord",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 96,
+            "name": "Unlock Centaur Warrunner",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 97,
+            "name": "Unlock Magnus",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 98,
+            "name": "Unlock Timbersaw",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 99,
+            "name": "Unlock Bristleback",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 100,
+            "name": "Unlock Tusk",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 101,
+            "name": "Unlock Skywrath Mage",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 102,
+            "name": "Unlock Abaddon",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 103,
+            "name": "Unlock Elder Titan",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 104,
+            "name": "Unlock Legion Commander",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 105,
+            "name": "Unlock Techies",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 106,
+            "name": "Unlock Ember Spirit",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 107,
+            "name": "Unlock Earth Spirit",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 108,
+            "name": "Unlock Underlord",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 109,
+            "name": "Unlock Terrorblade",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 110,
+            "name": "Unlock Phoenix",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 111,
+            "name": "Unlock Oracle",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 112,
+            "name": "Unlock Winter Wyvern",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 113,
+            "name": "Unlock Arc Warden",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 114,
+            "name": "Unlock Monkey King",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 119,
+            "name": "Unlock Dark Willow",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 120,
+            "name": "Unlock Pangolier",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 121,
+            "name": "Unlock Grimstroke",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 123,
+            "name": "Unlock Hoodwink",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 126,
+            "name": "Unlock Void Spirit",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 128,
+            "name": "Unlock Snapfire",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 129,
+            "name": "Unlock Mars",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 131,
+            "name": "Unlock Ringmaster",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 135,
+            "name": "Unlock Dawnbreaker",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 136,
+            "name": "Unlock Marci",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 137,
+            "name": "Unlock Primal Beast",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 138,
+            "name": "Unlock Muerta",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 145,
+            "name": "Unlock Kez",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 155,
+            "name": "Unlock Largo",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        }
+    ]
+}
