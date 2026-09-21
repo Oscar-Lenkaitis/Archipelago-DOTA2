@@ -12,8 +12,8 @@ from worlds.AutoWorld import World, WebWorld
 
 # Imports of your world's files must be relative.
 from .options import (DOTA2Options, GoalType, _FINAL_CHARACTER_NAMES,)
-from .items import DOTA2Item, ItemDef, load_hero_unlock_items, build_item_name_to_id, FILLER_ITEM_NAME
-from .locations import DOTA2Location, LocationDef, load_hero_locations, build_location_name_to_id, load_item_locations, load_game_stat_locations
+from .items import DOTA2Item, ItemDef, load_hero_unlock_items, build_item_name_to_id, FILLER_ITEM_NAME,get_static_item_defs
+from .locations import DOTA2Location, LocationDef, load_hero_locations, build_location_name_to_id, load_item_locations, load_game_stat_locations,load_static_hero_locations
 from .rules import set_dota_rules
 from .regions import create_regions_and_locations
 from .hero import Hero, get_starting_hero_pool, get_all_heroes
@@ -56,18 +56,26 @@ class DOTA2World(World):
     starting_hero_pool: list[Hero] = field(default_factory=list)
     hero_groups: list[list[Hero]] = field(default_factory=list)
     unlocked_heroes: list[Hero] = field(default_factory=list)
+    all_heroes = get_all_heroes()
 
     # Choose a stable, unique base_id range for your world.
     base_id = 770_1540
 
-    _location_defs: List[LocationDef] = []
+    _location_defs: List[LocationDef]
 
-    _item_defs: List[ItemDef] = []
+    _item_defs: List[ItemDef]
+    _satic_item_defs = get_static_item_defs()
 
-    item_name_to_id: Dict[str, int] = {}
+    item_name_to_id: Dict[str, int] =  build_item_name_to_id(base_id, _satic_item_defs)
 
-    location_name_to_id: Dict[str, int] = {}
+    _static_location_defs = (
+        load_static_hero_locations()
+        + load_item_locations()
+        + load_game_stat_locations()
+    )
 
+
+    location_name_to_id: Dict[str, int] = build_location_name_to_id(base_id + 10_000, _static_location_defs,)
 
 
     def create_item(self, name: str) -> DOTA2Item:
@@ -87,6 +95,8 @@ class DOTA2World(World):
     
 
     def generate_early(self) -> None:
+        self._location_defs = []
+        self._item_defs = []
 
         self._location_defs.extend(load_hero_locations(self))
         self._location_defs.extend(load_item_locations())

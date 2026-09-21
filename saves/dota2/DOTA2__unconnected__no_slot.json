@@ -1,0 +1,15 @@
+{
+  "seed_name": "unconnected",
+  "start_date_local": "2026-09-20T22:20:00-05:00",
+  "steamid": null,
+  "Primordial_fragments_total": 0,
+  "wins_total": 0,
+  "starting_hero_pool": [],
+  "hero_groups": [],
+  "heroes_unlocked": [],
+  "all_heroes": [],
+  "unique_heroes_won": [],
+  "submitted_match_ids": [],
+  "most_recent_game_time": 0,
+  "last_valid_match_id": 0
+}

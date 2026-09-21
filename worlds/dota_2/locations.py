@@ -89,5 +89,33 @@ def build_location_name_to_id(base_id: int, location_defs: List[LocationDef], fi
         return {d.name: base_id + i for i, d in enumerate(location_defs)}
     return {d.name: base_id + i for i, d in enumerate(location_defs) if filter_fn(d)}
 
+def load_static_hero_locations() -> List[LocationDef]:
+    locs: List[LocationDef] = []
+    ocs: List[LocationDef] = []
+
+    all_heroes = get_all_heroes()
+
+    # Starting pool is always 30 heroes.
+    # The remaining heroes are divided into groups of 14.
+    remaining_count = max(0, len(all_heroes) - 30)
+    group_count = (remaining_count + 13) // 14
+
+    locs.append(
+        LocationDef(
+            name="Win with hero from starting pool",
+            type="HERO_WIN",
+        )
+    )
+
+    for i in range(group_count):
+        locs.append(
+            LocationDef(
+                name=f"Win with Hero from Group {i + 1}",
+                type="HERO_WIN",
+            )
+        )
+
+    return locs
+
 
 

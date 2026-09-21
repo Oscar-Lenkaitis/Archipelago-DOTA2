@@ -3,7 +3,7 @@ import re
 import asyncio
 import json
 import logging
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from pathlib import Path
 from typing import Optional, Any
 from datetime import datetime
@@ -32,6 +32,7 @@ class Dota2CommandProcessor(ClientCommandProcessor):
         asyncio.create_task(self.ctx.cmd_parse_recent_match_data())
 
     def _cmd_heroes(self) -> None:
+        """View unlocked heroes"""
         self.ctx.get_unlocked_heros()
 
 try:
@@ -58,10 +59,10 @@ class Dota2Save:
 
     Primordial_fragments_total: int = 0
     wins_total: int = 0
-    starting_hero_pool: list[Hero] = []
-    hero_groups: list[list[Hero]] = []
-    heroes_unlocked: list[Hero]
-    all_heroes: list[Hero] = get_all_heroes()
+    starting_hero_pool: list[Hero] = field(default_factory=list)
+    hero_groups: list[list[Hero]] = field(default_factory=list)
+    heroes_unlocked: list[Hero] = field(default_factory=list)
+    all_heroes: list[Hero] = field(default_factory=list)
     
     # Unique heroes we've won with (authoritative for goal; not derived from server state)
     unique_heroes_won: list[Hero] = None

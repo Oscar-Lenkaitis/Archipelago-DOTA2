@@ -82,3 +82,24 @@ def build_item_name_to_id(base_id: int, item_defs: list[ItemDef]) -> dict[str, i
 
     return {name: i for i, name in enumerate(names, base_id)}
 
+def get_static_item_defs() -> list[ItemDef]:
+    return [
+        ItemDef(
+            name="Progressive Group Unlock",
+            classification=ItemClassification.progression,
+            copies=0,
+            include_in_filler=False,
+        ),
+        ItemDef(
+            name="Primordial Fragment",
+            classification=ItemClassification.progression,
+            copies=0,
+            include_in_filler=False,
+        ),
+        ItemDef(
+            name=FILLER_ITEM_NAME,
+            classification=ItemClassification.filler,
+            copies=0,
+            include_in_filler=True,
+        ),
+    ]
