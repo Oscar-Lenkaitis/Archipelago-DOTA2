@@ -158,6 +158,10 @@ class DOTA2World(World):
         primordial_fragments_to_unlock_final = self._effective_primordial_fragments_to_unlock_final()
         final_character_index = self.options.final_character.value
         final_character_name = _FINAL_CHARACTER_NAMES[final_character_index] if final_character_index < len(_FINAL_CHARACTER_NAMES) else ""
+
+        starting_hero_pool = [hero.name for hero in self.starting_hero_pool]
+        hero_groups = [ [hero.name for hero in group] for group in self.hero_groups]
+
         return {
             "goal_type": self.options.goal_type.value,
             "unique_characters_to_win": self.options.unique_characters_to_win.value,
@@ -165,6 +169,8 @@ class DOTA2World(World):
             "primordial_fragments_to_win": primordial_fragments_to_win,
             "primordial_fragments_to_unlock_final": primordial_fragments_to_unlock_final,
             "final_character": final_character_name,
+            "starting_hero_pool": starting_hero_pool,
+            "hero_groups": hero_groups
             # "game_mode": self.options.game_mode.value,
             # "exclude_hard_locations": self.options.exclude_hard_locations.value,
         }

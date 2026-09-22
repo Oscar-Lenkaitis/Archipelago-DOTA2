@@ -28,7 +28,7 @@ OPEN_DOTA = opendota.OpenDota()
 
 def get_most_recent_match_id(steamID):
     print(f"DEBUG: awaiting getting player matches")
-    match = OPEN_DOTA.get_player_matches(steamID)
+    match = OPEN_DOTA.get_player_matches(steamID, force=True)
     print(f"DEBUG: {match[0]['match_id']}")
     return match[0]['match_id']
 

@@ -37,5 +37,15 @@ def get_starting_hero_pool(self, pool_size: int, all_heroes:list[Hero]) -> list[
     starting_hero_pool = self.multiworld.random.sample(all_heroes, pool_size)
     return starting_hero_pool
 
+def hero_from_dict(data: dict) -> Hero:
+    return Hero(
+        id=data["id"],
+        api_name=data["api_name"],
+        name=data["name"],
+        primary_attr=data["primary_attr"],
+        attack_type=data["attack_type"],
+        roles=data["roles"],
+        legs=data["legs"]
+    )
 
 

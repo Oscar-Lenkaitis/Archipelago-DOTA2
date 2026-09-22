@@ -40,6 +40,7 @@ def load_hero_locations(self) -> List[LocationDef]:
 
     self.hero_groups = hero_groups
     self.starting_hero_pool = starting_hero_pool
+    
     self.unlocked_heroes = starting_hero_pool.copy()
 
     locs.append(LocationDef(name = "Win with hero from starting pool", type = "HERO_WIN"))

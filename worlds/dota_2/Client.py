@@ -9,7 +9,7 @@ from typing import Optional, Any
 from datetime import datetime
 
 from .dota_api import parse_most_recent_match_data, DotaMatchData
-from .hero import Hero, get_all_heroes
+from .hero import Hero, get_all_heroes, hero_from_dict
 
 from CommonClient import CommonContext, gui_enabled, server_loop, console_loop, ClientCommandProcessor
 
@@ -31,7 +31,7 @@ class Dota2CommandProcessor(ClientCommandProcessor):
         """try to parse the most recent match completed"""
         asyncio.create_task(self.ctx.cmd_parse_recent_match_data())
 
-    def _cmd_heroes(self) -> None:
+    def _cmd_heroes(self) -> None: 
         """View unlocked heroes"""
         self.ctx.get_unlocked_heros()
 
@@ -251,6 +251,27 @@ class Dota2Context(CommonContext):
         elif cmd == "Connected":
             # Store slot_data so we can read goal options (goal_type, unique_characters_to_win, total_wins_to_win, fragments_to_win)
             setattr(self, "slot_data", args.get("slot_data") or {})
+
+            starting_hero_names = self.slot_data.get("starting_hero_pool", [])
+            hero_group_names = self.slot_data.get("hero_groups", [])
+
+            self.save.all_heroes = get_all_heroes()
+
+            self.save.starting_hero_pool = [hero for hero in self.save.all_heroes if hero.name in starting_hero_names]
+
+            self.save.hero_groups = [ [ hero for hero in self.save.all_heroes if hero.name in group]
+                    for group in hero_group_names
+                ]
+
+            if not self.save.heroes_unlocked or self.save.heroes_unlocked == []:
+                self.save.heroes_unlocked = self.save.starting_hero_pool.copy()
+
+            hero_by_id = {hero.id: hero for hero in self.save.all_heroes}
+
+            self.save.heroes_unlocked = [
+                hero_by_id[hero["id"]] if isinstance(hero, dict) else hero
+                for hero in self.save.heroes_unlocked
+            ]
             super().on_package(cmd, args)
             return
         elif cmd == "ReceivedItems":
@@ -386,12 +407,11 @@ class Dota2Context(CommonContext):
             return
 
         match_data = await parse_most_recent_match_data(int(self.save.steamid))
-
         if match_data is None:
             self.output("No recent match found.")
             return
-
-        await self.check_dota_goals_and_locations(self, match_data)
+        
+        await self.check_dota_goals_and_locations(match_data)
 
     def get_unlocked_hero_by_id(self, hero_id: int) -> Optional[Hero]:
         for hero in self.save.heroes_unlocked:
@@ -401,12 +421,14 @@ class Dota2Context(CommonContext):
         return None
 
     def get_unlocked_heros(self) -> None:
+        self.output("Available Heroes")
         for hero in self.save.heroes_unlocked:
             self.output(f"{hero.name}")
 
 
 
     async def check_dota_goals_and_locations(self, match_data:DotaMatchData ) -> None:
+        self.output("inside the check method")
         if(match_data.match_id == self.save.last_valid_match_id):
             self.output(f"Match {match_data.match_id} already proccessed")
             return  
@@ -414,6 +436,7 @@ class Dota2Context(CommonContext):
         #first check if played hero is even unlocked
         hero_id = match_data.hero_id
         hero = self.get_unlocked_hero_by_id(hero_id)
+        self.output(hero)
         if(hero is None):
             self.output("Hero not unlocked")
             return
@@ -424,10 +447,12 @@ class Dota2Context(CommonContext):
             self.save.wins_total += 1
             win = True
 
+        self.output(win)
+
         checks = []
         #hero win checks
         if(hero and win):
-
+            self.output("hero checks")
             if (hero in self.save.starting_hero_pool):
                 checks.append("Win with hero from starting pool")
             for i, group in enumerate(self.save.hero_groups, start=1):
@@ -513,7 +538,8 @@ class Dota2Context(CommonContext):
         if valid_location_ids:
             await self.check_locations(valid_location_ids)
 
-        self.save.last_valid_match_id = match_data.match_id
+        #uncomment this for later once I am done testing
+        #self.save.last_valid_match_id = match_data.match_id
 
         await _check_goal_and_send_if_met(self)
 
