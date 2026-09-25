@@ -11,6 +11,7 @@ from BaseClasses import Tutorial
 from worlds.AutoWorld import World, WebWorld
 
 # Imports of your world's files must be relative.
+from .constants import DOTA2_BASE_ID
 from .options import (DOTA2Options, GoalType, _FINAL_CHARACTER_NAMES,)
 from .items import DOTA2Item, ItemDef, load_hero_unlock_items, build_item_name_to_id, FILLER_ITEM_NAME,get_static_item_defs
 from .locations import DOTA2Location, LocationDef, load_hero_locations, build_location_name_to_id, load_item_locations, load_game_stat_locations,load_static_hero_locations
@@ -56,10 +57,15 @@ class DOTA2World(World):
     starting_hero_pool: list[Hero] = field(default_factory=list)
     hero_groups: list[list[Hero]] = field(default_factory=list)
     unlocked_heroes: list[Hero] = field(default_factory=list)
+    unique_heroes_won: list[Hero] = field(default_factory=list)
     all_heroes = get_all_heroes()
 
+    progressive_hero_group_unlocks: int = 0
+    items_received_index: int = 0 
+    
+
     # Choose a stable, unique base_id range for your world.
-    base_id = 770_1540
+    base_id = DOTA2_BASE_ID
 
     _location_defs: List[LocationDef]
 
@@ -97,6 +103,7 @@ class DOTA2World(World):
     def generate_early(self) -> None:
         self._location_defs = []
         self._item_defs = []
+        self.unique_heroes_won = []
 
         self._location_defs.extend(load_hero_locations(self))
         self._location_defs.extend(load_item_locations())
@@ -161,6 +168,7 @@ class DOTA2World(World):
 
         starting_hero_pool = [hero.name for hero in self.starting_hero_pool]
         hero_groups = [ [hero.name for hero in group] for group in self.hero_groups]
+        unique_heroes_won = [hero.name for hero in self.unique_heroes_won]
 
         return {
             "goal_type": self.options.goal_type.value,
@@ -170,7 +178,10 @@ class DOTA2World(World):
             "primordial_fragments_to_unlock_final": primordial_fragments_to_unlock_final,
             "final_character": final_character_name,
             "starting_hero_pool": starting_hero_pool,
-            "hero_groups": hero_groups
+            "hero_groups": hero_groups,
+            "unique_heroes_won" : unique_heroes_won,
+            "progressive_hero_group_unlocks": self.progressive_hero_group_unlocks,
+            "items_received_index": self.items_received_index
             # "game_mode": self.options.game_mode.value,
             # "exclude_hard_locations": self.options.exclude_hard_locations.value,
         }

@@ -6,10 +6,6 @@ from dataclasses import dataclass
 
 from BaseClasses import Item, ItemClassification
 
-if TYPE_CHECKING:
-    from .world import DOTA2World
-
-
 # MacGuffin item: collect X to win (Prim goal) or unlock final character (Win with Character).
 # Spirits stay classified as filler in item definitions so they don't interfere with progression
 # density, but we override DeadlockItem.excludable so Spirits are never placed in excluded
@@ -53,7 +49,6 @@ def _parse_classification(value: str) -> ItemClassification:
 def load_hero_unlock_items(self:DOTA2World) -> List[ItemDef]:
     # Works in source and in zipped apworld due to importlib.resources.
     items: List[ItemDef] = []
-
 
     name = "Progressive Group Unlock"
     classification = _parse_classification("progression")

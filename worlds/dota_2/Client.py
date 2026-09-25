@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Optional, Any
 from datetime import datetime
 
+from .constants import PROGRESSIVE_GROUP_UNLOCK_ID, PRIMORDIAL_FRAGMENT_ID, FILLER_ITEM_ID
 from .dota_api import parse_most_recent_match_data, DotaMatchData
 from .hero import Hero, get_all_heroes, hero_from_dict
 
@@ -57,7 +58,7 @@ class Dota2Save:
     # Player config: stored as digits only (e.g. "123456789")
     steamid: Optional[str] = None
 
-    Primordial_fragments_total: int = 0
+    primordial_fragments_total: int = 0
     wins_total: int = 0
     starting_hero_pool: list[Hero] = field(default_factory=list)
     hero_groups: list[list[Hero]] = field(default_factory=list)
@@ -65,14 +66,18 @@ class Dota2Save:
     all_heroes: list[Hero] = field(default_factory=list)
     
     # Unique heroes we've won with (authoritative for goal; not derived from server state)
-    unique_heroes_won: list[Hero] = None
+    unique_heroes_won: list[Hero] = field(default_factory=list)
     
     # Anti-duplicate
-    submitted_match_ids: list[str] = None
+    submitted_match_ids: list[str] = field(default_factory=list)
 
     most_recent_game_time: int = 0
 
     last_valid_match_id: int = 0
+
+    progressive_hero_group_unlocks: int = 0
+
+    items_received_index: int = 0
 
     def __post_init__(self) -> None:
         if self.submitted_match_ids is None:
@@ -179,8 +184,9 @@ async def _check_goal_and_send_if_met(
     slot_data = getattr(ctx, "slot_data", None) or {}
     goal_type, unique_req, total_wins_req, fragments_req, fragments_unlock_req, final_character = _get_goal_options(slot_data)
     goal_met = False
-    # if goal_type == GOAL_UNIQUE_CHARACTERS and len(ctx.save.unique_heroes_won) >= unique_req:
-    #     goal_met = True
+    if goal_type == GOAL_UNIQUE_CHARACTERS:
+        if (len(ctx.save.unique_heroes_won) >= unique_req and _count_fragments_received(ctx) >= fragments_req):
+            goal_met = True
     if goal_type == GOAL_TOTAL_WINS:
         if( wins_after >= total_wins_req and _count_fragments_received(ctx) >= fragments_req):
             goal_met = True
@@ -195,6 +201,13 @@ async def _check_goal_and_send_if_met(
         ctx.output("Goal completed! You have met the win condition.")  
         await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
 
+def _unlock_next_hero_group(ctx: "Dota2Context") -> None:
+    hero_group_i = ctx.save.progressive_hero_group_unlocks
+    for hero in ctx.save.hero_groups[hero_group_i]:
+        ctx.save.heroes_unlocked.append(hero)
+
+    ctx.save.progressive_hero_group_unlocks += 1    
+        
 
 
 
@@ -254,6 +267,8 @@ class Dota2Context(CommonContext):
 
             starting_hero_names = self.slot_data.get("starting_hero_pool", [])
             hero_group_names = self.slot_data.get("hero_groups", [])
+            unique_heroes_won = self.slot_data.get("unique_heroes_won", [])
+            self.save.progressive_hero_group_unlocks = self.slot_data.get("progressive_hero_group_unlocks", [])
 
             self.save.all_heroes = get_all_heroes()
 
@@ -272,10 +287,27 @@ class Dota2Context(CommonContext):
                 hero_by_id[hero["id"]] if isinstance(hero, dict) else hero
                 for hero in self.save.heroes_unlocked
             ]
+
+            self.save.unique_heroes_won = [hero for hero in self.save.all_heroes if hero.name in unique_heroes_won]
             super().on_package(cmd, args)
             return
         elif cmd == "ReceivedItems":
-            # Primordial Fragments (MacGuffin) goal can be met by receiving items; check after each batch
+           #check for items being sent for progressive hero unlock
+            index = args["index"]
+            for i, item in enumerate(args["items"]):
+                item_index = index + i
+
+                if item_index < self.save.items_received_index:
+                    continue
+
+                if item.item == PROGRESSIVE_GROUP_UNLOCK_ID:
+                    _unlock_next_hero_group(self)
+                elif item.item == PRIMORDIAL_FRAGMENT_ID:
+                    self.save.primordial_fragments_total += 1
+
+                self.save.items_received_index = item_index + 1
+
+        # Primordial Fragments (MacGuffin) goal can be met by receiving items; check after each batch
             if async_start:
                 async_start(_check_goal_and_send_if_met(self), name="check_goal")
 
@@ -369,13 +401,14 @@ class Dota2Context(CommonContext):
 
         if goal_type == GOAL_UNIQUE_CHARACTERS:
             current = len(self.save.unique_heroes_won)
-            self.output(f"Goal: Win with {unique_req} unique character(s).")
-            self.output(f"Progress: {current} / {unique_req} unique character(s) won with.")
+            fragments_current = _count_fragments_received(self)
+            self.output(f"Goal: Win with {unique_req} unique character(s). Collect {fragment_unlock_req} Primordial Fragments.")
+            self.output(f"Progress: {current} / {unique_req} unique character(s) won with, {fragments_current} / {fragment_unlock_req} win(s)")
         elif goal_type == GOAL_TOTAL_WINS:
             current = self.save.wins_total
             fragments_current = _count_fragments_received(self)
             self.output(f"Goal: Win {total_wins_req} match(es), Collect {fragment_unlock_req} Primordial Fragments.")
-            self.output(f"Progress: {current} / {total_wins_req} win(s), {fragments_current} / {fragment_unlock_req} win(s)")
+            self.output(f"Progress: {current} / {total_wins_req} win(s), {fragments_current} / {fragment_unlock_req} fragments(s)")
         elif goal_type == GOAL_WIN_WITH_CHARACTER and final_character:
             fragments_current = _count_fragments_received(self)
             self.output(f"Goal: Collect {fragment_unlock_req} fragments to unlock your final character, then win one match with them.")
@@ -457,7 +490,7 @@ class Dota2Context(CommonContext):
                 checks.append("Win with hero from starting pool")
             for i, group in enumerate(self.save.hero_groups, start=1):
                 if(hero in group):
-                    checks.append(f"Win with Hero from Group {i}")
+                    checks.append(f"Win with Hero from Group {i}")     
             #check hero primary attribute
             if(hero.primary_attr == "all"):
                 checks.append("Win as a Universal Hero")
@@ -484,7 +517,14 @@ class Dota2Context(CommonContext):
             if("Carry" in hero.roles):
                 checks.append("Win as a Carry Hero")
             elif("Support" in hero.roles):
-                checks.append("Win as a Support Hero")                
+                checks.append("Win as a Support Hero")   
+
+            self.save.wins_total += 1
+            
+
+            if (hero not in self.save.unique_heroes_won):
+                self.save.unique_heroes_won.append(hero)
+
 
         #all other game stat and buy checks
         dewards = match_data.dewards
