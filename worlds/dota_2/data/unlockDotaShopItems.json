@@ -198,14 +198,14 @@
         },
         {
             "id": 30,
-            "name": "Unlock ring_of_regen",
+            "name": "Unlock javelin",
             "classification": "progression",
             "copies": 1,
             "include_in_filler": "False"
         },
         {
             "id": 31,
-            "name": "Unlock Lich",
+            "name": "Unlock ring_of_regen",
             "classification": "progression",
             "copies": 1,
             "include_in_filler": "False"
