@@ -1,0 +1,424 @@
+{
+    "unlock_shop_items": [
+        {
+            "id": 1,
+            "name": "Unlock branches",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 2,
+            "name": "Unlock gauntlets",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 3,
+            "name": "Unlock slippers",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 4,
+            "name": "Unlock mantle",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 5,
+            "name": "Unlock circlet",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 6,
+            "name": "Unlock belt_of_strength",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 7,
+            "name": "Unlock band_of_elves",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 8,
+            "name": "Unlock robe",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 9,
+            "name": "Unlock crown",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 10,
+            "name": "Unlock ogre_axe",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 11,
+            "name": "Unlock blade_of_alacrity",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 12,
+            "name": "Unlock staff_of_wizardry",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 13,
+            "name": "Unlock diadem",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 14,
+            "name": "Unlock ghost",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 15,
+            "name": "Unlock quelling_blade",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 16,
+            "name": "Unlock ring_of_protection",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 17,
+            "name": "Unlock blades_of_attack",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 18,
+            "name": "Unlock orb_of_frost",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 19,
+            "name": "Unlock gloves",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 20,
+            "name": "Unlock chainmail",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 21,
+            "name": "Unlock broadsword",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 22,
+            "name": "Unlock blight_stone",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 23,
+            "name": "Unlock blitz_knuckles",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 25,
+            "name": "Unlock splintmail",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 26,
+            "name": "Unlock claymore",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 27,
+            "name": "Unlock orb_of_venom",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 28,
+            "name": "Unlock helm_of_iron_will",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 29,
+            "name": "Unlock mithril_hammer",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 30,
+            "name": "Unlock ring_of_regen",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 31,
+            "name": "Unlock Lich",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 32,
+            "name": "Unlock sobi_mask",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 33,
+            "name": "Unlock wind_lace",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 34,
+            "name": "Unlock magic_stick",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 35,
+            "name": "Unlock fluffy_hat",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 36,
+            "name": "Unlock wizard_hat",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 37,
+            "name": "Unlock boots",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 38,
+            "name": "Unlock voodoo_mask",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 39,
+            "name": "Unlock shawl",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 40,
+            "name": "Unlock shadow_amulet",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 41,
+            "name": "Unlock gem",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 42,
+            "name": "Unlock morbid_mask",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 43,
+            "name": "Unlock cloak",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 44,
+            "name": "Unlock chasm_stone",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 45,
+            "name": "Unlock blink",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 46,
+            "name": "Unlock ring_of_health",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 47,
+            "name": "Unlock void_stone",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 48,
+            "name": "Unlock talisman_of_evasion",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 49,
+            "name": "Unlock platemail",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 50,
+            "name": "Unlock ring_of_tarrasque",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 51,
+            "name": "Unlock tiara_of_selemene",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 52,
+            "name": "Unlock hyperstone",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 53,
+            "name": "Unlock demon_edge",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 54,
+            "name": "Unlock vitality_booster",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 55,
+            "name": "Unlock energy_booster",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 56,
+            "name": "Unlock point_booster",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 57,
+            "name": "Unlock relic",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 58,
+            "name": "Unlock reaver",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 59,
+            "name": "Unlock eagle",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 60,
+            "name": "Unlock mystic_staff",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        },
+        {
+            "id": 61,
+            "name": "Unlock ultimate_orb",
+            "classification": "progression",
+            "copies": 1,
+            "include_in_filler": "False"
+        }
+    ]
+}
