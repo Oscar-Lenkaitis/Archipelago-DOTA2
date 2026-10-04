@@ -10,6 +10,7 @@ from datetime import datetime
 
 from .constants import PROGRESSIVE_GROUP_UNLOCK_ID, PRIMORDIAL_FRAGMENT_ID, FILLER_ITEM_ID
 from .dota_api import parse_most_recent_match_data, DotaMatchData
+from .locations import LocationDef, load_item_locations 
 from .hero import Hero, get_all_heroes, hero_from_dict
 
 from CommonClient import CommonContext, gui_enabled, server_loop, console_loop, ClientCommandProcessor
@@ -32,9 +33,17 @@ class Dota2CommandProcessor(ClientCommandProcessor):
         """try to parse the most recent match completed"""
         asyncio.create_task(self.ctx.cmd_parse_recent_match_data())
 
+    def _cmd_game_complete(self) -> None:
+        """function to run once goal is completed in case it doesn't release"""
+        asyncio.create_task(self.ctx.game_complete())
+
     def _cmd_heroes(self) -> None: 
         """View unlocked heroes"""
-        self.ctx.get_unlocked_heros()
+        self.ctx.get_unlocked_heroes()
+
+    def _cmd_hero_wins(self) -> None:
+        """View hero wins"""
+        self.ctx.get_hero_wins()
 
 try:
     from Utils import async_start
@@ -64,7 +73,8 @@ class Dota2Save:
     hero_groups: list[list[Hero]] = field(default_factory=list)
     heroes_unlocked: list[Hero] = field(default_factory=list)
     all_heroes: list[Hero] = field(default_factory=list)
-    
+
+    item_name_to_id: dict[int, str] = field(default_factory=dict)
     # Unique heroes we've won with (authoritative for goal; not derived from server state)
     unique_heroes_won: list[Hero] = field(default_factory=list)
     
@@ -99,54 +109,41 @@ def _safe_filename(s: str) -> str:
     return re.sub(r"[^a-zA-Z0-9._-]+", "_", s)[:120]
 
 # Goal type values (must match options.GoalType)
-GOAL_UNIQUE_CHARACTERS = 0
-GOAL_TOTAL_WINS = 1
-GOAL_PRIMORDIAL_FRAGMENTS = 2
-GOAL_WIN_WITH_CHARACTER = 3
-
+GOAL_STANDARD = 0
+GOAL_All_HEROES= 1
 # MacGuffin item name (must match items.FILLER_ITEM_NAME)
 FILLER_ITEM_NAME = "Primordial Fragment"
 
-def _get_goal_options(slot_data: dict) -> tuple[int, int, int, int, int, str]:
-    """Return (goal_type, unique_characters_to_win, total_wins_to_win,  fragments_to_win,  fragments_to_unlock_final, final_character) from slot_data."""
+def _get_goal_options(slot_data: dict) -> tuple[int, int, int, int]:
+    """Return (goal_type, unique_characters_to_win, total_wins_to_win,  fragments_to_win) from slot_data."""
     if not isinstance(slot_data, dict):
         slot_data = {}
-    raw_goal = slot_data.get("goal_type", GOAL_UNIQUE_CHARACTERS)
-    if raw_goal in (1, "1", "total_wins"):
-        goal_type = GOAL_TOTAL_WINS
-    elif raw_goal in (2, "2", "fragments"):
-        goal_type = GOAL_PRIMORDIAL_FRAGMENTS
-    elif raw_goal in (3, "3", "win_with_character"):
-        goal_type = GOAL_WIN_WITH_CHARACTER
+    raw_goal = slot_data.get("goal_type", GOAL_STANDARD)
+    if raw_goal in (1, "1", "All_HEROES"):
+        goal_type = GOAL_All_HEROES
     else:
-        goal_type = GOAL_UNIQUE_CHARACTERS
-    raw_unique = slot_data.get("unique_characters_to_win", 10)
-    raw_total = slot_data.get("total_wins_to_win", 25)
-    raw_fragments = slot_data.get("fragments_to_win", 10)
-    raw_fragments_unlock = slot_data.get("fragments_to_unlock_final", 10)
-    final_character = str(slot_data.get("final_character", "") or "").strip()
+        goal_type = GOAL_STANDARD
+
+    raw_unique = slot_data.get("unique_characters_to_win", 5)
+    raw_total = slot_data.get("total_wins_to_win", 10)
+    raw_fragments = slot_data.get("fragments_to_win", 15)
     try:
         unique = int(raw_unique)
     except (TypeError, ValueError):
-        unique = 10
+        unique = 5
     try:
         total_wins = int(raw_total)
     except (TypeError, ValueError):
-        total_wins = 25
+        total_wins = 10
     try:
         fragments = int(raw_fragments)
     except (TypeError, ValueError):
-        fragments = 10
-    try:
-        fragments_unlock = int(raw_fragments_unlock)
-    except (TypeError, ValueError):
-        fragments_unlock = 10
-    unique = max(1, min(38, unique))
-    total_wins = max(1, min(100, total_wins))
-    max_fragments = 20 if slot_data.get("game_mode", 0) == 1 else 10
-    fragments = max(1, min(max_fragments, fragments))
-    fragments_unlock = max(1, min(max_fragments, fragments_unlock))
-    return (goal_type, unique, total_wins, fragments, fragments_unlock, final_character)
+        fragments = 15
+
+    unique = max(1, min(127, unique))
+    total_wins = max(1, min(127, total_wins))
+
+    return (goal_type, unique, total_wins, fragments)
 
 def _count_fragments_received(ctx: "Dota2Context") -> int:
     """Return how many fragments (MacGuffin) items the player has received."""
@@ -182,13 +179,13 @@ async def _check_goal_and_send_if_met(
     if wins_after is None:
         wins_after = ctx.save.wins_total
     slot_data = getattr(ctx, "slot_data", None) or {}
-    goal_type, unique_req, total_wins_req, fragments_req, fragments_unlock_req, final_character = _get_goal_options(slot_data)
+    goal_type, unique_req, total_wins_req, fragments_req = _get_goal_options(slot_data)
     goal_met = False
-    if goal_type == GOAL_UNIQUE_CHARACTERS:
-        if (len(ctx.save.unique_heroes_won) >= unique_req and _count_fragments_received(ctx) >= fragments_req):
+    if goal_type == GOAL_STANDARD:
+        if (len(ctx.save.unique_heroes_won) >= unique_req and _count_fragments_received(ctx) >= fragments_req) and len(ctx.save.unique_heroes_won) >= unique_req:
             goal_met = True
-    if goal_type == GOAL_TOTAL_WINS:
-        if( wins_after >= total_wins_req and _count_fragments_received(ctx) >= fragments_req):
+    if goal_type == GOAL_All_HEROES:
+        if (len(ctx.save.unique_heroes_won) >= unique_req and _count_fragments_received(ctx) >= fragments_req) and len(ctx.save.unique_heroes_won) >= unique_req:
             goal_met = True
     # elif goal_type == GOAL_PRIMORDIAL_FRAGMENTS:
     #     if _count_fragments_received(ctx) >= fragments_req:
@@ -198,8 +195,14 @@ async def _check_goal_and_send_if_met(
     #         goal_met = True
     if goal_met and ClientStatus is not None:
         ctx.finished_game = True
+        location_name_to_id = {name: location_id for location_id, name in game_locations.items()}
+        game_complete_location_id = location_name_to_id.get("Goal Complete")
+        
+        await ctx.send_msgs([{"cmd": "LocationChecks", "locations": [game_complete_location_id]}])
         ctx.output("Goal completed! You have met the win condition.")  
         await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
+    else: 
+        ctx.output("Goal Not Completed!")
 
 def _unlock_next_hero_group(ctx: "Dota2Context") -> None:
     hero_group_i = ctx.save.progressive_hero_group_unlocks
@@ -267,7 +270,6 @@ class Dota2Context(CommonContext):
 
             starting_hero_names = self.slot_data.get("starting_hero_pool", [])
             hero_group_names = self.slot_data.get("hero_groups", [])
-            unique_heroes_won = self.slot_data.get("unique_heroes_won", [])
             self.save.progressive_hero_group_unlocks = self.slot_data.get("progressive_hero_group_unlocks", [])
 
             self.save.all_heroes = get_all_heroes()
@@ -288,7 +290,23 @@ class Dota2Context(CommonContext):
                 for hero in self.save.heroes_unlocked
             ]
 
-            self.save.unique_heroes_won = [hero for hero in self.save.all_heroes if hero.name in unique_heroes_won]
+            if isinstance(self.save.unique_heroes_won, dict):
+                self.save.unique_heroes_won = [self.save.unique_heroes_won]
+
+            if isinstance(self.save.unique_heroes_won, list):
+                saved_names = {
+                    hero["name"]
+                    for hero in self.save.unique_heroes_won
+                    if isinstance(hero, dict)
+                }
+
+                self.save.unique_heroes_won = [
+                    hero
+                    for hero in self.save.all_heroes
+                    if hero.name in saved_names
+                ]
+
+            self.save.item_name_to_id = self.slot_data.get("item_name_to_id", [])
             super().on_package(cmd, args)
             return
         elif cmd == "ReceivedItems":
@@ -397,27 +415,20 @@ class Dota2Context(CommonContext):
             return
         self.ensure_seed_save_loaded()
         slot_data = getattr(self, "slot_data", None) or {}
-        goal_type, unique_req, total_wins_req, fragment_req, fragment_unlock_req, final_character = _get_goal_options(slot_data)
+        goal_type, unique_req, total_wins_req, fragment_req= _get_goal_options(slot_data)
 
-        if goal_type == GOAL_UNIQUE_CHARACTERS:
-            current = len(self.save.unique_heroes_won)
+        if goal_type == GOAL_STANDARD:
+            hero_wins = len(self.save.unique_heroes_won)
             fragments_current = _count_fragments_received(self)
-            self.output(f"Goal: Win with {unique_req} unique character(s). Collect {fragment_unlock_req} Primordial Fragments.")
-            self.output(f"Progress: {current} / {unique_req} unique character(s) won with, {fragments_current} / {fragment_unlock_req} win(s)")
-        elif goal_type == GOAL_TOTAL_WINS:
-            current = self.save.wins_total
+            game_wins = self.save.wins_total
+            self.output(f"Goal: Win with {unique_req} unique character(s), Win {total_wins_req} match(es),  Collect {fragment_req} Primordial Fragments.")
+            self.output(f"Progress: {hero_wins} / {unique_req} unique characters, {game_wins}/ {total_wins_req} match wins , {fragments_current} / {fragment_req} Primordial Fragments.")
+        elif goal_type == GOAL_All_HEROES:
+            hero_wins = len(self.save.unique_heroes_won)
             fragments_current = _count_fragments_received(self)
-            self.output(f"Goal: Win {total_wins_req} match(es), Collect {fragment_unlock_req} Primordial Fragments.")
-            self.output(f"Progress: {current} / {total_wins_req} win(s), {fragments_current} / {fragment_unlock_req} fragments(s)")
-        elif goal_type == GOAL_WIN_WITH_CHARACTER and final_character:
-            fragments_current = _count_fragments_received(self)
-            self.output(f"Goal: Collect {fragment_unlock_req} fragments to unlock your final character, then win one match with them.")
-            self.output(f"Win with: {final_character}")
-            self.output(f"Progress: {fragments_current} / {fragment_unlock_req} fragments. Then win one match with {final_character}.")
-        else:
-            current = _count_fragments_received(self)
-            self.output(f"Goal: Collect {fragment_req} fragments (MacGuffin).")
-            self.output(f"Progress: {current} / {fragment_req} fragments received.")
+            game_wins = self.save.wins_total
+            self.output(f"Goal: Win with all heroes, Win 127 matches, collect {fragment_req} Primordial Fragments.")
+            self.output(f"Progress:{hero_wins} / 127 heroes, {game_wins} / 127 wins, {fragments_current} / {fragment_req} Primordial Fragments.")
 
     def cmd_set_player_id(self, args: list[str]) -> None:
         self.ensure_seed_save_loaded()
@@ -445,6 +456,7 @@ class Dota2Context(CommonContext):
             return
         
         await self.check_dota_goals_and_locations(match_data)
+        self.save_save()
 
     def get_unlocked_hero_by_id(self, hero_id: int) -> Optional[Hero]:
         for hero in self.save.heroes_unlocked:
@@ -453,11 +465,23 @@ class Dota2Context(CommonContext):
 
         return None
 
-    def get_unlocked_heros(self) -> None:
+    def get_unlocked_heroes(self) -> None:
         self.output("Available Heroes")
         for hero in self.save.heroes_unlocked:
-            self.output(f"{hero.name}")
+            group_name = "Starting Group"
 
+            if hero not in self.save.starting_hero_pool:
+                for i, group in enumerate(self.save.hero_groups, start=1):
+                    if hero in group:
+                        group_name = f"Group {i}"
+                        break
+
+            self.output(f"{hero.name} - {group_name}")
+
+    def get_hero_wins(self) -> None:
+        self.output(f"Hero Wins: {len(self.save.unique_heroes_won)}")
+        for hero in self.save.unique_heroes_won:
+            self.output(f"{hero.name}")
 
 
     async def check_dota_goals_and_locations(self, match_data:DotaMatchData ) -> None:
@@ -507,20 +531,17 @@ class Dota2Context(CommonContext):
                 checks.append("Win as a Ranged Hero")
             #check Hero leg count
             if(hero.legs == 0):
-                checks.append("Win as a Hero with 0 Legs")
+                checks.append("Win as a 0 Legged Hero")
             if(hero.legs == 2):
-                checks.append("Win as a Hero with 2 Legs")
+                checks.append("Win as a 2 Legged Hero")
             if(hero.legs >= 4):
-                checks.append("Win as a Hero with 4+ Legs")
+                checks.append("Win as a 4+ Legged Hero")
 
             #check if win with carry or support. If both: default to carry
             if("Carry" in hero.roles):
                 checks.append("Win as a Carry Hero")
             elif("Support" in hero.roles):
-                checks.append("Win as a Support Hero")   
-
-            self.save.wins_total += 1
-            
+                checks.append("Win as a Support Hero")            
 
             if (hero not in self.save.unique_heroes_won):
                 self.save.unique_heroes_won.append(hero)
@@ -532,6 +553,7 @@ class Dota2Context(CommonContext):
         assists = match_data.assists
         last_hits = match_data.last_hits
         denies = match_data.denies
+        purchases = match_data.purchase
 
         KILL_THRESHOLDS = [1, 5, 10]
         DEWARD_THRESHOLDS = [1, 5, 10]
@@ -562,6 +584,12 @@ class Dota2Context(CommonContext):
             for location_id, name in game_locations.items()
         }
 
+        all_item_locations = load_item_locations()
+
+        purchase_checks = self.check_purchases(purchases, all_item_locations)
+    
+        checks.extend(purchase_checks)
+       
         valid_location_ids = []
         for check in checks:
             location_id = location_name_to_id.get(check)
@@ -583,6 +611,43 @@ class Dota2Context(CommonContext):
 
         await _check_goal_and_send_if_met(self)
 
+    async def game_complete(self) -> None:
+        await _check_goal_and_send_if_met(self)
+
+    def check_purchases(self, purchases : list[str], all_item_locations: list[LocationDef]) -> list[str]:
+            valid_purchases = []
+            for purchase in purchases:
+                item_location = next((location for location in all_item_locations if location.name == purchase), None)
+
+                if item_location == None:
+                    continue
+
+                if item_location.requirements == None:
+                    valid_purchases.append(purchase)
+                else:
+                    requirements_met = self.item_requirements_met(item_location.requirements)
+                    if requirements_met:
+                        valid_purchases.append(purchase)
+            return valid_purchases
+            
+    def item_requirements_met(self, requirements: list[str]) -> bool:
+        received_item_ids = {
+            item.item
+            for item in self.items_received
+        }
+
+
+        for requirement in requirements:
+            item_name = "Unlock " + requirement
+            item_id = self.save.item_name_to_id.get(item_name)
+
+            if item_id is None:
+                return False
+
+            if item_id not in received_item_ids:
+                return False
+
+        return True
         
 
 async def _main() -> None:

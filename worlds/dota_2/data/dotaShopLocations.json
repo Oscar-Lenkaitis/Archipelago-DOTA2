@@ -514,7 +514,7 @@
     "created": false,
     "charges": false
   },
-  "band_of_elves": {
+  "boots_of_elves": {
     "id": 18,
     "img": "/apps/dota2/images/dota_react/items/boots_of_elves.png?t=1593393829403",
     "dname": "Band of Elvenskin",
@@ -528,7 +528,7 @@
     "lore": "A tensile fabric often used for its light weight and ease of movement.",
     "components": null,
     "requirements": [
-      "band_of_elves"
+      "boots_of_elves"
     ],
     "created": false,
     "charges": false
@@ -723,7 +723,7 @@
     "created": false,
     "charges": false
   },
-  "morbid_mask": {
+  "lifesteal": {
     
     "hint": [],
     "id": 26,
@@ -739,7 +739,7 @@
     "lore": "A mask that drains the energy of those caught in its gaze.",
     "components": null,
     "requirements": [
-      "morbid_mask"
+      "lifesteal"
     ],
     "created": false,
     "charges": false
@@ -1071,7 +1071,7 @@
     "charges": 1
   },
  
-  "salve": {
+  "flask": {
     
     "hint": [],
     "id": 39,
@@ -1931,13 +1931,13 @@
     "components": [
       "buckler",
       "ring_of_basilius",
-      "morbid_mask",
+      "lifesteal",
       "blades_of_attack"
     ],
     "requirements": [
       "ring_of_protection",
       "sobi_mask",
-      "morbid_mask",
+      "lifesteal",
       "blades_of_attack"
     ], 
     "created": true,
@@ -3456,7 +3456,7 @@
     ],
     "requirements": [
       "blade_of_alacrity",
-      "band_of_elves",
+      "boots_of_elves",
       "diadem"
     ],
     "created": true,
@@ -3624,7 +3624,7 @@
       "ogre_axe",
       "belt_of_strength",
       "blade_of_alacrity",
-      "band_of_elves"
+      "boots_of_elves"
     ],
     "created": true,
     "charges": false
@@ -3674,7 +3674,7 @@
       "staff_of_wizardry",
       "robe",
       "blade_of_alacrity",
-      "band_of_elves"
+      "boots_of_elves"
     ],
     "created": true,
     "charges": false
@@ -3701,12 +3701,12 @@
     "components": [
       "reaver",
       "claymore",
-      "morbid_mask"
+      "lifesteal"
     ],
     "requirements": [
       "reaver",
       "claymore",
-      "morbid_mask"
+      "lifesteal"
     ],
     "created": true,
     "charges": false
@@ -3964,11 +3964,11 @@
     "lore": "Yasha is regarded as the swiftest weapon ever created.",
     "components": [
       "blade_of_alacrity",
-      "band_of_elves"
+      "boots_of_elves"
     ],
     "requirements": [
       "blade_of_alacrity",
-      "band_of_elves"
+      "boots_of_elves"
     ],
     "created": true,
     "charges": false
@@ -3994,11 +3994,11 @@
     "lore": "Once this mask is worn, its bearer becomes an uncontrollable aggressive force.",
     "components": [
       "broadsword",
-      "morbid_mask"
+      "lifesteal"
     ],
     "requirements": [
       "broadsword",
-      "morbid_mask"
+      "lifesteal"
     ],
     "created": true,
     "charges": false
@@ -4214,7 +4214,7 @@
     "cd": 9,
     "lore": "Envenoms your veapon with the venom of a venomous viper.",
     "components": null,
-    "requirements": null,
+    "requirements": ["orb_of_venom"],
     "created": false,
     "charges": false
   },
@@ -4235,7 +4235,7 @@
     "cd": false,
     "lore": "An unnerving stone unearthed beneath the Fields of Endless Carnage.",
     "components": null,
-    "requirements": null,
+    "requirements": ["blight_stone"],
     "created": false,
     "charges": false
   },
@@ -4255,12 +4255,12 @@
     "cd": false,
     "lore": "Seepage from the wounds of a warrior deity, sealed in an arcanist's orb following a campaign of vicious slaughter.",
     "components": [
-      "band_of_elves",
+      "boots_of_elves",
       "orb_of_frost",
       "blight_stone"
     ],
     "requirements": [
-      "band_of_elves",
+      "boots_of_elves",
       "orb_of_frost",
       "blight_stone"
     ],
@@ -4282,7 +4282,9 @@
     "cd": false,
     "lore": "Slowly growing since the universe began, it will envelop everything when it ends.",
     "components": null,
-    "requirements": null,
+    "requirements": [
+      "orb_of_frost"
+    ],
     "created": false,
     "charges": false
   },

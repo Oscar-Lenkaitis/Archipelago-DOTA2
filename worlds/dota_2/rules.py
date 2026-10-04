@@ -8,7 +8,7 @@ from BaseClasses import CollectionState
 from worlds.generic.Rules import add_rule, set_rule, add_item_rule
 
 from .items import FILLER_ITEM_NAME
-from .options import GoalType, _FINAL_CHARACTER_NAMES
+from .options import GoalType
 
 if TYPE_CHECKING:
     from .world import DOTA2World
@@ -25,6 +25,6 @@ def set_dota_rules(world:DOTA2World)-> None:
     primordial_gate = world.options.primordial_fragments_to_win.value
 
     multiworld.completion_condition[player] = lambda state: (
-        state.count("Primordial Fragment", player) >= primordial_gate
+        state.count("Primordial Fragment", player) >= primordial_gate and state.has("Complete", player)
     )
 

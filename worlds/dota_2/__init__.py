@@ -12,9 +12,9 @@ from worlds.AutoWorld import World, WebWorld
 
 # Imports of your world's files must be relative.
 from .constants import DOTA2_BASE_ID
-from .options import (DOTA2Options, GoalType, _FINAL_CHARACTER_NAMES,)
-from .items import DOTA2Item, ItemDef, load_hero_unlock_items, build_item_name_to_id, FILLER_ITEM_NAME,get_static_item_defs
-from .locations import DOTA2Location, LocationDef, load_hero_locations, build_location_name_to_id, load_item_locations, load_game_stat_locations,load_static_hero_locations
+from .options import (DOTA2Options, GoalType,)
+from .items import DOTA2Item, ItemDef, load_hero_unlock_items, build_item_name_to_id, FILLER_ITEM_NAME,load_item_defs, load_shop_unlock_items
+from .locations import DOTA2Location, LocationDef, load_hero_locations, build_location_name_to_id, load_item_locations, load_game_stat_locations,load_static_hero_locations, load_victory_location
 from .rules import set_dota_rules
 from .regions import create_regions_and_locations
 from .hero import Hero, get_starting_hero_pool, get_all_heroes
@@ -67,22 +67,17 @@ class DOTA2World(World):
     # Choose a stable, unique base_id range for your world.
     base_id = DOTA2_BASE_ID
 
-    _location_defs: List[LocationDef]
+    _location_defs = (
+            load_static_hero_locations()
+            + load_item_locations()
+            + load_game_stat_locations()
+            + load_victory_location()
+        )
 
-    _item_defs: List[ItemDef]
-    _satic_item_defs = get_static_item_defs()
+    _item_defs = load_item_defs()
 
-    item_name_to_id: Dict[str, int] =  build_item_name_to_id(base_id, _satic_item_defs)
-
-    _static_location_defs = (
-        load_static_hero_locations()
-        + load_item_locations()
-        + load_game_stat_locations()
-    )
-
-
-    location_name_to_id: Dict[str, int] = build_location_name_to_id(base_id + 10_000, _static_location_defs,)
-
+    location_name_to_id: Dict[str, int] = build_location_name_to_id(base_id + 10_000, _location_defs,)
+    item_name_to_id: Dict[str, int] =  build_item_name_to_id(base_id, _item_defs)
 
     def create_item(self, name: str) -> DOTA2Item:
         # Determine classification from defs or fallback for special items.
@@ -103,25 +98,21 @@ class DOTA2World(World):
     def generate_early(self) -> None:
         self._location_defs = []
         self._item_defs = []
-        self.unique_heroes_won = []
-
         self._location_defs.extend(load_hero_locations(self))
         self._location_defs.extend(load_item_locations())
         self._location_defs.extend(load_game_stat_locations())
+        self._location_defs.extend(load_victory_location())
 
         self._item_defs.extend(load_hero_unlock_items(self))
+        self._item_defs.extend(load_shop_unlock_items())
 
-        self.item_name_to_id = build_item_name_to_id(self.base_id, self._item_defs)
         # location_name_to_id is set per-instance in generate_early from filtered defs (see below).
-        self.location_name_to_id = build_location_name_to_id(self.base_id + 10_000, self._location_defs)
-        
-        
-        def item_type_valid(d: LocationDef) -> bool:
+        def location_type_valid(d: LocationDef) -> bool:
             return d.type == "HERO_WIN" or d.type ==  "ITEM_BUY" or d.type ==  "GAME_STAT" or d.type ==  "GOAL"
     
-        self._filtered_location_defs = [d for d in self._location_defs if item_type_valid(d)]
+        self._filtered_location_defs = [d for d in self._location_defs if location_type_valid(d)]
         self.location_name_to_id = build_location_name_to_id(
-            self.base_id + 10_000, self._location_defs, filter_fn=item_type_valid
+            self.base_id + 10_000, self._location_defs, filter_fn=location_type_valid
         )
 
     def create_regions(self) -> None:
@@ -142,46 +133,44 @@ class DOTA2World(World):
             v = min(v, max(1, max_sp - 1))
         return max(1, v)
 
-    def _goal_location_name(self) -> str:
-        if self.options.goal_type == GoalType.option_unique_characters:
-            x = self.options.unique_characters_to_win.value
-            return f"Goal: Win with {x} Unique Characters"
-        if self.options.goal_type == GoalType.option_total_wins:
-            x = self.options.total_wins_to_win.value
-            y = self.options.primordial_fragments_to_unlock_final.value
-            return f"Goal: Win {x} Total Matches and Collect {y} Primordial Fragments "
-        if self.options.goal_type == GoalType.option_win_with_character:
-            x = self.options.primordial_fragments_to_unlock_final.value
-            hero = _FINAL_CHARACTER_NAMES[self.options.final_character.value] if self.options.final_character.value < len(_FINAL_CHARACTER_NAMES) else "?"
-            return f"Goal: Win with {hero} (after {x} Spirits)"
-        x = self.options.spirits_to_win.value
-        return f"Goal: Collect {x} Spirits"
+    # def _goal_location_name(self) -> str:
+    #     if self.options.goal_type == GoalType.option_unique_characters:
+    #         x = self.options.unique_characters_to_win.value
+    #         return f"Goal: Win with {x} Unique Characters"
+    #     if self.options.goal_type == GoalType.option_total_wins:
+    #         x = self.options.total_wins_to_win.value
+    #         y = self.options.primordial_fragments_to_unlock_final.value
+    #         return f"Goal: Win {x} Total Matches and Collect {y} Primordial Fragments "
+    #     if self.options.goal_type == GoalType.option_win_with_character:
+    #         x = self.options.primordial_fragments_to_unlock_final.value
+    #         hero = _FINAL_CHARACTER_NAMES[self.options.final_character.value] if self.options.final_character.value < len(_FINAL_CHARACTER_NAMES) else "?"
+    #         return f"Goal: Win with {hero} (after {x} Spirits)"
+    #     x = self.options.spirits_to_win.value
+    #     return f"Goal: Collect {x} Spirits"
 
     def fill_slot_data(self) -> Mapping[str, Any]:
         """Data sent to the client in the Connected packet so /goal and win condition use the correct options."""
         # Max fragmetns = number of check locations (pool size); Goal has locked Victory so pool size is locations - 1
-        max_primordial_fragments = self._max_primordial_fragments_placeable()
-        primordial_fragments_to_win = min(self.options.primordial_fragments_to_win.value, max_primordial_fragments)
-        primordial_fragments_to_unlock_final = self._effective_primordial_fragments_to_unlock_final()
-        final_character_index = self.options.final_character.value
-        final_character_name = _FINAL_CHARACTER_NAMES[final_character_index] if final_character_index < len(_FINAL_CHARACTER_NAMES) else ""
+        #max_primordial_fragments = self._max_primordial_fragments_placeable()
+        #primordial_fragments_to_win = self.options.primordial_fragments_to_win.value
+        #primordial_fragments_to_unlock_final = self._effective_primordial_fragments_to_unlock_final()
+        # final_character_index = self.options.final_character.value
+        # final_character_name = _FINAL_CHARACTER_NAMES[final_character_index] if final_character_index < len(_FINAL_CHARACTER_NAMES) else ""
 
         starting_hero_pool = [hero.name for hero in self.starting_hero_pool]
         hero_groups = [ [hero.name for hero in group] for group in self.hero_groups]
-        unique_heroes_won = [hero.name for hero in self.unique_heroes_won]
+    
 
         return {
             "goal_type": self.options.goal_type.value,
             "unique_characters_to_win": self.options.unique_characters_to_win.value,
             "total_wins_to_win": self.options.total_wins_to_win.value,
-            "primordial_fragments_to_win": primordial_fragments_to_win,
-            "primordial_fragments_to_unlock_final": primordial_fragments_to_unlock_final,
-            "final_character": final_character_name,
+            "primordial_fragments_to_win": self.options.primordial_fragments_to_win.value,
             "starting_hero_pool": starting_hero_pool,
             "hero_groups": hero_groups,
-            "unique_heroes_won" : unique_heroes_won,
             "progressive_hero_group_unlocks": self.progressive_hero_group_unlocks,
-            "items_received_index": self.items_received_index
+            "items_received_index": self.items_received_index,
+            "item_name_to_id": self.item_id_to_name
             # "game_mode": self.options.game_mode.value,
             # "exclude_hard_locations": self.options.exclude_hard_locations.value,
         }

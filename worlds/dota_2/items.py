@@ -6,10 +6,6 @@ from dataclasses import dataclass
 
 from BaseClasses import Item, ItemClassification
 
-# MacGuffin item: collect X to win (Prim goal) or unlock final character (Win with Character).
-# Spirits stay classified as filler in item definitions so they don't interfere with progression
-# density, but we override DeadlockItem.excludable so Spirits are never placed in excluded
-# locations.
 FILLER_ITEM_NAME = "Madstone"
 
 class DOTA2Item(Item):
@@ -17,11 +13,9 @@ class DOTA2Item(Item):
 
     @property
     def excludable(self) -> bool:  # type: ignore[override]
-        # Treat Primordial Fragments (MacGuffin) as non-excludable even though they are filler-classified.
-        # This ensures they can't be placed on user-excluded locations while keeping them
-        # out of progression-balancing logic.
+        # Treat madstones as excludable items
         if self.name == FILLER_ITEM_NAME:
-            return False
+            return True
         return super().excludable
     
 @dataclass(frozen=True)
@@ -59,9 +53,25 @@ def load_hero_unlock_items(self:DOTA2World) -> List[ItemDef]:
     items.append(ItemDef(
         name="Primordial Fragment",
         classification=_parse_classification("progression"),
-        copies=self.options.primordial_fragments_to_win.value + 5,
+        copies=self.options.primordial_fragments_to_win.value + 10,
         include_in_filler=False
     ))
+
+    return items
+
+def load_shop_unlock_items() -> List[ItemDef]:
+    # Works in source and in zipped apworld due to importlib.resources.
+    items: List[ItemDef] = []
+
+    with resources.files(__package__).joinpath("data/unlockDotaShopItems.json").open("r", encoding="utf-8") as f:
+        data = json.load(f)
+        
+        for item in data['unlock_shop_items']:
+            name = item['name']
+            classification = _parse_classification("progression")
+            copies = 1
+            include_in_filler = False
+            items.append(ItemDef(name=name, classification=classification, copies=copies, include_in_filler=include_in_filler))
 
     return items
 
@@ -77,24 +87,25 @@ def build_item_name_to_id(base_id: int, item_defs: list[ItemDef]) -> dict[str, i
 
     return {name: i for i, name in enumerate(names, base_id)}
 
-def get_static_item_defs() -> list[ItemDef]:
-    return [
-        ItemDef(
+def load_item_defs() -> list[ItemDef]:
+    items: List[ItemDef] = []
+    items.append(ItemDef(
             name="Progressive Group Unlock",
             classification=ItemClassification.progression,
             copies=0,
-            include_in_filler=False,
-        ),
-        ItemDef(
+            include_in_filler=False))
+    items.append(ItemDef(
             name="Primordial Fragment",
             classification=ItemClassification.progression,
             copies=0,
             include_in_filler=False,
-        ),
-        ItemDef(
+        ))
+    items.append(ItemDef(
             name=FILLER_ITEM_NAME,
             classification=ItemClassification.filler,
             copies=0,
             include_in_filler=True,
-        ),
-    ]
+        ))
+    items.extend(load_shop_unlock_items())
+
+    return items

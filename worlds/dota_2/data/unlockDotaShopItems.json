@@ -44,7 +44,7 @@
         },
         {
             "id": 7,
-            "name": "Unlock band_of_elves",
+            "name": "Unlock boots_of_elves",
             "classification": "progression",
             "copies": 1,
             "include_in_filler": "False"
@@ -282,7 +282,7 @@
         },
         {
             "id": 42,
-            "name": "Unlock morbid_mask",
+            "name": "Unlock lifesteal",
             "classification": "progression",
             "copies": 1,
             "include_in_filler": "False"

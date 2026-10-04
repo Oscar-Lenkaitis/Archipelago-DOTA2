@@ -4,7 +4,7 @@ import json
 from importlib import resources
 import typing
 from typing import TYPE_CHECKING, Dict, List
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from .hero import Hero, get_all_heroes,get_starting_hero_pool
 
 from BaseClasses import ItemClassification, Location
@@ -16,6 +16,7 @@ from . import items
 class LocationDef:
     name: str
     type: str = ""  # "HERO_WIN", "ITEM_BUY", "GAME_STAT", "GOAL"
+    requirements: list[str] = field(default_factory=list)
 
 
 class DOTA2Location(Location):
@@ -42,6 +43,7 @@ def load_hero_locations(self) -> List[LocationDef]:
     self.starting_hero_pool = starting_hero_pool
     
     self.unlocked_heroes = starting_hero_pool.copy()
+    self.unique_heroes_won = []
 
     locs.append(LocationDef(name = "Win with hero from starting pool", type = "HERO_WIN"))
     for i, group in enumerate(hero_groups):
@@ -53,18 +55,15 @@ def load_hero_locations(self) -> List[LocationDef]:
 def load_item_locations() -> List[LocationDef]:
     locs: List[LocationDef] = []
 
-    with resources.files(__package__).joinpath("data/itemPurchases.json").open("r", encoding="utf-8") as f:
+    with resources.files(__package__).joinpath("data/dotaShopLocations.json").open("r", encoding="utf-8") as f:
         data = json.load(f)
 
-        for item in data['purchase_locations']:
-            type = ''
-            name = item['name']
-            if(name == 'Goal'):
-                type = "GOAL"
-            else: 
-                type = "ITEM_BUY"
+        for item_name, item_data in data.items():
+            requirements = item_data.get("requirements") or []
+            type = 'ITEM_BUY'
+            name = item_name
 
-            locs.append(LocationDef(name = name, type=type))
+            locs.append(LocationDef(name = name, type=type, requirements=requirements))
 
     return locs
 
@@ -92,7 +91,6 @@ def build_location_name_to_id(base_id: int, location_defs: List[LocationDef], fi
 
 def load_static_hero_locations() -> List[LocationDef]:
     locs: List[LocationDef] = []
-    ocs: List[LocationDef] = []
 
     all_heroes = get_all_heroes()
 
@@ -118,5 +116,15 @@ def load_static_hero_locations() -> List[LocationDef]:
 
     return locs
 
+def load_victory_location() -> List[LocationDef]:
+    locs: List[LocationDef] = []
+
+    locs.append(
+        LocationDef(
+            name="Goal Complete",
+            type="GOAL",
+        )
+    )
+    return locs
 
 

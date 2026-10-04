@@ -8,6 +8,7 @@ if TYPE_CHECKING:
     from .world import DOTA2World
 
 from .locations import DOTA2Location, LocationDef
+from BaseClasses import Item, ItemClassification
 
 def create_regions_and_locations(world: DOTA2World, location_defs: list[LocationDef]) -> None:
     multiworld = world.multiworld
@@ -22,7 +23,11 @@ def create_regions_and_locations(world: DOTA2World, location_defs: list[Location
     for d in location_defs:
         loc_id = world.location_name_to_id[d.name]
         location = DOTA2Location(player, d.name, loc_id, main)
-        if(d.name.startswith("Win with Hero from Group ")):
+        if (d.name == "Goal Complete"):
+            print("Found Game Complete:", d.name, d.type)
+            location.address = None
+            location.place_locked_item(Item("Complete",ItemClassification.progression, None, player)) 
+        elif(d.name.startswith("Win with Hero from Group ")):
             group_number = int(d.name.removeprefix("Win with Hero from Group "))
             required_unlocks = group_number
             location.access_rule = lambda state, required=required_unlocks: (
@@ -32,6 +37,11 @@ def create_regions_and_locations(world: DOTA2World, location_defs: list[Location
             category = d.name.removeprefix("Win as a ").removesuffix(" Hero")
             location.access_rule = lambda state, category=category: (
                 category_hero_available(world, state, category)
+            )
+        elif d.requirements:
+            location.access_rule = (
+                lambda state, requirements=d.requirements:
+                    item_requirements_met(world, state, requirements)
             )
     
         main.locations.append(location)
@@ -94,4 +104,15 @@ def hero_matches_category(hero, category: str) -> bool:
         return hero.legs >= 4
 
     return False
+
+def item_requirements_met(
+    world: DOTA2World,
+    state,
+    requirements: list[str]
+) -> bool:
+    for requirement in requirements:
+        if not state.has("Unlock " + requirement, world.player):
+            return False
+
+    return True
 
