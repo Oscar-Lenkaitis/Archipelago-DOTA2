@@ -201,8 +201,6 @@ async def _check_goal_and_send_if_met(
         await ctx.send_msgs([{"cmd": "LocationChecks", "locations": [game_complete_location_id]}])
         ctx.output("Goal completed! You have met the win condition.")  
         await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
-    else: 
-        ctx.output("Goal Not Completed!")
 
 def _unlock_next_hero_group(ctx: "Dota2Context") -> None:
     hero_group_i = ctx.save.progressive_hero_group_unlocks
