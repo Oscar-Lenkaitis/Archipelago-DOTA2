@@ -29,11 +29,11 @@ Follow these steps to play Deadlock with Archipelago
 
  - 3. Generate A multiworld with your options
 
- - 4. Open the **DOTA2 Client** from the laucnher and connect with server, slot name, and password(if applicable)
+ - 4. Open the **DOTA2 Client** from the launcher and connect with server, slot name, and password(if applicable)
 
- - 5. Set your SteamId32 using the custom method /set_player_id 123456789
+ - 5. Set your SteamId32 using the custom method `/set_player_id 123456789`
 
- - 6. Play Dota 2 matches. After every match, even if youy lose, submit the match for checks by typing /parse_recent_match into the Dota 2 client
+ - 6. Play Dota 2 matches. After every match, even if youy lose, submit the match for checks by typing `/parse_recent_match` into the Dota 2 client
 
 ---
 
@@ -41,9 +41,9 @@ Follow these steps to play Deadlock with Archipelago
 
 `/set_player_id` - Saves the SteamId locally to submit matches.
 
-`/parse_recent_match` - Tries to parse your most recent match data and get stats for checks. **May take a minute after the game for data to be available and may take several minutes for the api to parse all the game stats**.
+`/parse_recent_match` - Tries to parse your most recent match data and get stats for checks. **May take a minute after the game for data to be available and may take several minutes for the api to parse all the game stats once method is called**.
 
-`/goal` - See your goal and how close you are to completing it.
+`/goal` - See your goal and progress towards completing the goal.
 
 `/heroes` - See which heroes are unlocked and which progressive unlock pool they belong to.
 

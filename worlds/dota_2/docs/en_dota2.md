@@ -8,7 +8,7 @@ A **Meta-progression randomizer** for DOTA 2. You play regular online matches an
 
 - **Stats and Attributes** - Checks such as "Win with a Melee Hero", "Win with a Support Hero", "Have X kills", "Have X Dewards" are examples of some checks in the game
 
-- **Shop Items** - While you can buy any item in a Dota 2 match, the checks for buying those items will be **locked** for the Archipelago until the right unlock items are found. All Consumable Items will start unlocked: Tangos, Salves, Wards etc. For an Item to be available all **Basic Components** of that item must be unlocked (Recipes not included). Example: the "Unlock Ring of Protection" item unlocks both the "Ring of Protection" check and the "Buckler" Check (ring + recipe), however the "Soul Ring" check would require the "Unlock Gauntlets of Strength" item as well to be unlocked (ring + gauntlets + recipe). 
+- **Shop Items** - While you can buy any item in a Dota 2 match, the checks for buying those items will be **locked** for the Archipelago until the right unlock items are found. All Consumable Items will start unlocked: Tangos, Salves, Wards etc. For an Item to be available **all Basic Components** of that item must be unlocked (Recipes not included). Example: the `"Unlock Ring of Protection"` item unlocks both the `"Ring of Protection"` check and the `"Buckler"` check (ring + recipe), however the `"Soul Ring"` check would require the `"Unlock Gauntlets of Strength"` item as well (ring + gauntlets + recipe). 
 
 - **Collectables** - A certain number of **Primordial Fragments** set by the options are required to complete the goal. This is needed so the archipelago has something it can actually track and generate the logic around
 
