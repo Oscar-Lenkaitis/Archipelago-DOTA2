@@ -304,7 +304,8 @@ class Dota2Context(CommonContext):
                     if hero.name in saved_names
                 ]
 
-            self.save.item_name_to_id = self.slot_data.get("item_name_to_id", [])
+            raw_item_id_to_name = self.slot_data.get("item_name_to_id", {})
+            self.save.item_name_to_id = {name: int(item_id) for item_id, name in raw_item_id_to_name.items()}
             super().on_package(cmd, args)
             return
         elif cmd == "ReceivedItems":
@@ -620,7 +621,7 @@ class Dota2Context(CommonContext):
                 if item_location == None:
                     continue
 
-                if item_location.requirements == None:
+                if item_location.requirements == None or len(item_location.requirements) == 0 :
                     valid_purchases.append(purchase)
                 else:
                     requirements_met = self.item_requirements_met(item_location.requirements)
