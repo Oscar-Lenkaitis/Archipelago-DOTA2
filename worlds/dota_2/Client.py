@@ -126,7 +126,7 @@ def _get_goal_options(slot_data: dict) -> tuple[int, int, int, int]:
 
     raw_unique = slot_data.get("unique_characters_to_win", 5)
     raw_total = slot_data.get("total_wins_to_win", 10)
-    raw_fragments = slot_data.get("fragments_to_win", 15)
+    raw_fragments = slot_data.get("primordial_fragments_to_win", 10)
     try:
         unique = int(raw_unique)
     except (TypeError, ValueError):

@@ -41,7 +41,7 @@ class TotalWinsToWin(Range):
     display_name = "Total Wins to Win"
     range_start = 1
     range_end = 127
-    default = 10
+    default = 5
 
 
 class PrimordialFragmentsToWin(Range):
@@ -49,7 +49,7 @@ class PrimordialFragmentsToWin(Range):
     display_name = "Primordial Fragments to Win"
     range_start = 10
     range_end = 50 #will always add 10 more than chosen
-    default = 15
+    default = 10
 
 # class PrimordialFragmentsToUnlockFinal(Range):
 #     """Number of Primordial Fragments (MacGuffin) you must collect to unlock your final character (Win with Character goal).
