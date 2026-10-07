@@ -266,7 +266,6 @@ class Dota2Context(CommonContext):
         elif cmd == "Connected":
             # Store slot_data so we can read goal options (goal_type, unique_characters_to_win, total_wins_to_win, fragments_to_win)
             setattr(self, "slot_data", args.get("slot_data") or {})
-            saved_heroes = self.save.unique_heroes_won
             starting_hero_names = self.slot_data.get("starting_hero_pool", [])
             hero_group_names = self.slot_data.get("hero_groups", [])
             self.save.progressive_hero_group_unlocks = self.slot_data.get("progressive_hero_group_unlocks", [])
